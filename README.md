@@ -30,7 +30,7 @@ For each of the models, I first set up isolated experiments using the Optuna lib
 I then combined these models using the Voting Classifier with soft voting, as submissions for this competition were evaluated on AUC score between the predicted probability and the observed target.
 
 # Results 
-The AUC score for the ensemble model was calculated by comparing the predicted and actual test set labels, resulting in an AUC score of 0.97. 
+The AUC score for the ensemble model was calculated by comparing the predicted and actual test set labels, resulting in an AUC score of 0.9665. 
 
 The best model achieved a Public Leaderboard Score of 0.96497, and a Private Leaderboard Score of 0.97128, which ultimately placed me in the Top 38.5% of 1,502 teams.
 ![image](https://github.com/ashtonkhoo/machine_failure_prediction/assets/54165058/089ececf-5ce0-4afd-a4c3-df5ba27db37c)
