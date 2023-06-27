@@ -28,3 +28,6 @@ The project workflow began with loading the dataset into a pandas dataframe and 
 
 # Results 
 The Area under the Receiver-Operator Curve (ROC-AUC) score was calculated by comparing the predicted and actual test set labels, resulting in an AUC score of 0.94. Hyperparameter tuning was then performed using Random Search on a candidate parameter grid, with a 5-fold cross-validation for 100 iterations, producing an improvement of performance to an AUC of 0.96.
+
+The best model achieved a Public Leaderboard Score of 0.96497, and a Private Leaderboard Score of 0.97128, which ultimately placed me in the Top 38.5% of 1,502 teams.
+![image](https://github.com/ashtonkhoo/machine_failure_prediction/assets/54165058/089ececf-5ce0-4afd-a4c3-df5ba27db37c)
