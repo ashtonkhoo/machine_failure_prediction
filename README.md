@@ -3,8 +3,8 @@
 - [Project Title](#project-title)
 - [Problem Statement](#problem-statement)
 - [Dataset](#dataset)
-- [Model Architecture](#model-architecture)
 - [Training & Testing Workflow](#training--testing-workflow)
+- [Model Architecture](#model-architecture)
 - [Results](#results)
 
 # Project Title
@@ -15,19 +15,22 @@ This project is part of the 2023 edition of Kaggle's Playground Series, which ai
 
 # Dataset
 The dataset is a csv file of roughly 7.2 MB, with 14 attributes and 136k instances. It contains a mix of numerical, categorical, and boolean variables.
-There were no missing values in this dataset, which made this dataset simple. However, it was also found that the target classes were imbalanced. 
 ## Source: Kaggle. 2023. "Binary Classification of Machine Failures", version 1. Retrieved 15/06/2023 from https://www.kaggle.com/competitions/playground-series-s3e17/data.
 
-# Model Architecture
-XGBoost, or Extreme Gradient Boosting, is a machine learning library that employs gradient-boosted decision trees (GBDT) and can be scaled and distributed. It supports parallel tree boosting and is considered the dominant library for tackling regression, classification, and ranking problems.
-
-I decided to use XGBoost to implement my solution because I was interested in experimenting with this powerful machine learning library and exploring its various hyperparameters. As XGBoost is known for its scalability, distributed computing capabilities, and strong performance in regression, classification, and ranking problems, it seemed like an ideal choice for my project. Additionally, by exploring its hyperparameters, I hoped to fine-tune the model and achieve the best possible performance for my particular use case.
+I also incorporated the original data set used to generate this synthetic dataset, in an effort to try to improve model performance.
+## Source: DineshManikanta. 2022. "Machine Failure Predictions", version 1. Retrieved 15/06/2023 from https://www.kaggle.com/datasets/dineshmanikanta/machine-failure-predictions.
 
 # Training & Testing Workflow
-The project workflow began with loading the dataset into a pandas dataframe and conducting exploratory data analysis to assess the presence of null values, duplicates, and obtain preliminary statistics about the data. A correlation matrix was then calculated to identify any correlated features. Since the selected algorithm, XGBoost, cannot handle categorical values, categorical features were encoded to numerical values. The distribution of label classes was examined, and the presence of class imbalance was discovered. To address this, ADASYN was implemented to oversample the minority class. The dataset was then split into training and testing sets using a 75/25 split. The XGBoost classifier was trained on the training set with initial parameters and used to make predictions on the test set. 
+The project workflow began with loading the dataset into a Pandas dataframe and conducting some simple exploratory data analysis to assess the presence of null values, duplicates, and obtain preliminary statistics about the data. A correlation matrix was then calculated to identify any correlated features. The dataset was then split into training and testing sets using a 80/20 split. 
+
+# Model Architecture
+After hours of testing individual models and submitting the results to the Kaggle leaderboard, I eventually ended up creating an ensemble model of the 4 best models I found from my experiments, which were XGBoost, LightGBM, Balanced Random Forest, and Histogram-based Gradient Boosting Classification Tree. 
+
+For each of the models, I first set up isolated experiments using the Optuna library to find the best set of hyperparameters which would maximize the Area under the Receiver-Operator Curve (ROC-AUC) score.
+I then combined these models using the Voting Classifier with soft voting, as submissions for this competition were evaluated on AUC score between the predicted probability and the observed target.
 
 # Results 
-The Area under the Receiver-Operator Curve (ROC-AUC) score was calculated by comparing the predicted and actual test set labels, resulting in an AUC score of 0.94. Hyperparameter tuning was then performed using Random Search on a candidate parameter grid, with a 5-fold cross-validation for 100 iterations, producing an improvement of performance to an AUC of 0.96.
+The AUC score for the ensemble model was calculated by comparing the predicted and actual test set labels, resulting in an AUC score of 0.97. 
 
 The best model achieved a Public Leaderboard Score of 0.96497, and a Private Leaderboard Score of 0.97128, which ultimately placed me in the Top 38.5% of 1,502 teams.
 ![image](https://github.com/ashtonkhoo/machine_failure_prediction/assets/54165058/089ececf-5ce0-4afd-a4c3-df5ba27db37c)
